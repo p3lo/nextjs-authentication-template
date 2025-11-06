@@ -1,6 +1,7 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
+import { useRouter } from "@/app/i18n/navigation"
 import { useState } from "react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -27,6 +28,8 @@ export default function AuthPage() {
 	const [signInForm, setSignInForm] = useState<SignInForm>({ email: "", password: "" })
 	const [signUpForm, setSignUpForm] = useState<SignUpForm>({ name: "", email: "", password: "" })
 	const router = useRouter()
+	const t = useTranslations("auth")
+	const tCommon = useTranslations("common")
 
 	const handleSignIn = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -38,12 +41,12 @@ export default function AuthPage() {
 				password: signInForm.password,
 			})
 			if (error) {
-				setError(error.message || "Sign in failed")
+				setError(error.message || t("signInFailed"))
 			} else {
 				router.push("/dashboard")
 			}
 		} catch (err) {
-			setError(err instanceof Error ? err.message : "Sign in failed")
+			setError(err instanceof Error ? err.message : t("signInFailed"))
 		} finally {
 			setLoading(false)
 		}
@@ -60,12 +63,12 @@ export default function AuthPage() {
 				password: signUpForm.password,
 			})
 			if (error) {
-				setError(error.message || "Sign up failed")
+				setError(error.message || t("signUpFailed"))
 			} else {
 				router.push("/auth")
 			}
 		} catch (err) {
-			setError(err instanceof Error ? err.message : "Sign up failed")
+			setError(err instanceof Error ? err.message : t("signUpFailed"))
 		} finally {
 			setLoading(false)
 		}
@@ -75,44 +78,44 @@ export default function AuthPage() {
 		<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
 			<Card className="w-full max-w-md">
 				<CardHeader>
-					<CardTitle>Authentication</CardTitle>
-					<CardDescription>Sign in to your account or create a new one</CardDescription>
+					<CardTitle>{t("title")}</CardTitle>
+					<CardDescription>{t("description")}</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<Tabs defaultValue="signin" className="w-full">
 						<TabsList className="grid w-full grid-cols-2">
-							<TabsTrigger value="signin">Sign In</TabsTrigger>
-							<TabsTrigger value="signup">Sign Up</TabsTrigger>
+							<TabsTrigger value="signin">{t("signIn")}</TabsTrigger>
+							<TabsTrigger value="signup">{t("signUp")}</TabsTrigger>
 						</TabsList>
 
 						<TabsContent value="signin">
 							<form onSubmit={handleSignIn} className="space-y-4">
 								<div className="space-y-2">
-									<Label htmlFor="signin-email">Email</Label>
+									<Label htmlFor="signin-email">{tCommon("email")}</Label>
 									<Input
 										id="signin-email"
 										name="email"
 										type="email"
-										placeholder="Enter your email"
+										placeholder={t("emailPlaceholder")}
 										value={signInForm.email}
 										onChange={(e) => setSignInForm({ ...signInForm, email: e.target.value })}
 										required
 									/>
 								</div>
 								<div className="space-y-2">
-									<Label htmlFor="signin-password">Password</Label>
+									<Label htmlFor="signin-password">{tCommon("password")}</Label>
 									<Input
 										id="signin-password"
 										name="password"
 										type="password"
-										placeholder="Enter your password"
+										placeholder={t("passwordPlaceholder")}
 										value={signInForm.password}
 										onChange={(e) => setSignInForm({ ...signInForm, password: e.target.value })}
 										required
 									/>
 								</div>
 								<Button type="submit" className="w-full" disabled={loading}>
-									{loading ? "Signing in..." : "Sign In"}
+									{loading ? t("signingIn") : t("signIn")}
 								</Button>
 							</form>
 						</TabsContent>
@@ -120,36 +123,36 @@ export default function AuthPage() {
 						<TabsContent value="signup">
 							<form onSubmit={handleSignUp} className="space-y-4">
 								<div className="space-y-2">
-									<Label htmlFor="signup-name">Name</Label>
+									<Label htmlFor="signup-name">{tCommon("name")}</Label>
 									<Input
 										id="signup-name"
 										name="name"
 										type="text"
-										placeholder="Enter your name"
+										placeholder={t("namePlaceholder")}
 										value={signUpForm.name}
 										onChange={(e) => setSignUpForm({ ...signUpForm, name: e.target.value })}
 										required
 									/>
 								</div>
 								<div className="space-y-2">
-									<Label htmlFor="signup-email">Email</Label>
+									<Label htmlFor="signup-email">{tCommon("email")}</Label>
 									<Input
 										id="signup-email"
 										name="email"
 										type="email"
-										placeholder="Enter your email"
+										placeholder={t("emailPlaceholder")}
 										value={signUpForm.email}
 										onChange={(e) => setSignUpForm({ ...signUpForm, email: e.target.value })}
 										required
 									/>
 								</div>
 								<div className="space-y-2">
-									<Label htmlFor="signup-password">Password</Label>
+									<Label htmlFor="signup-password">{tCommon("password")}</Label>
 									<Input
 										id="signup-password"
 										name="password"
 										type="password"
-										placeholder="Create a password"
+										placeholder={t("confirmPasswordPlaceholder")}
 										value={signUpForm.password}
 										onChange={(e) => setSignUpForm({ ...signUpForm, password: e.target.value })}
 										required
@@ -157,7 +160,7 @@ export default function AuthPage() {
 									/>
 								</div>
 								<Button type="submit" className="w-full" disabled={loading}>
-									{loading ? "Creating account..." : "Sign Up"}
+									{loading ? t("creatingAccount") : t("signUp")}
 								</Button>
 							</form>
 						</TabsContent>

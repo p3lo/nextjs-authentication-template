@@ -1,0 +1,11 @@
+import type { NextRequest } from "next/server"
+import createMiddleware from "next-intl/middleware"
+import { routing } from "./app/i18n/routing"
+
+export function proxy(request: NextRequest) {
+	return createMiddleware(routing)(request)
+}
+
+export const config = {
+	matcher: ["/((?!api|trpc|_next|_vercel|.*\\..*).*)"],
+}

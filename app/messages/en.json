@@ -1,0 +1,47 @@
+{
+	"common": {
+		"loading": "Loading...",
+		"email": "Email",
+		"password": "Password",
+		"name": "Name",
+		"logout": "Logout",
+		"backToHome": "Back to Home",
+		"goToLogin": "Go to Login"
+	},
+	"home": {
+		"title": "Welcome to Atrium",
+		"welcomeBack": "Welcome back, {name}!",
+		"signInPrompt": "Sign in or create an account to get started",
+		"loggedInAs": "You are logged in as {email}",
+		"dashboardAccess": "Access your personalized dashboard and manage your account",
+		"goToDashboard": "Go to Dashboard",
+		"loginRegister": "Login / Register"
+	},
+	"auth": {
+		"title": "Authentication",
+		"description": "Sign in to your account or create a new one",
+		"signIn": "Sign In",
+		"signUp": "Sign Up",
+		"emailPlaceholder": "Enter your email",
+		"passwordPlaceholder": "Enter your password",
+		"confirmPasswordPlaceholder": "Create a password",
+		"namePlaceholder": "Enter your name",
+		"signingIn": "Signing in...",
+		"creatingAccount": "Creating account...",
+		"signInFailed": "Sign in failed",
+		"signUpFailed": "Sign up failed"
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"welcome": "Welcome to your personalized dashboard, {name}!",
+		"loadingDescription": "Please wait while we check your authentication",
+		"accessDenied": "Access Denied",
+		"needToBeLoggedIn": "You need to be logged in to view this page",
+		"userInformation": "User Information",
+		"quickActions": "Quick Actions",
+		"accountStatus": "Account Status",
+		"accountActive": "✅ Your account is active and authenticated",
+		"userId": "User ID",
+		"profileImage": "Profile Image"
+	}
+}

@@ -1,0 +1,47 @@
+{
+	"common": {
+		"loading": "Načítavanie...",
+		"email": "E-mail",
+		"password": "Heslo",
+		"name": "Meno",
+		"logout": "Odhlásiť sa",
+		"backToHome": "Späť na domovskú stránku",
+		"goToLogin": "Prejsť na prihlásenie"
+	},
+	"home": {
+		"title": "Vitajte v Atrium",
+		"welcomeBack": "Vitajte späť, {name}!",
+		"signInPrompt": "Prihláste sa alebo vytvorte účet, aby ste mohli začať",
+		"loggedInAs": "Ste prihlásený ako {email}",
+		"dashboardAccess": "Získajte prístup k svojej personalizovanej nástenke a spravujte svoj účet",
+		"goToDashboard": "Prejsť na nástenku",
+		"loginRegister": "Prihlásenie / Registrácia"
+	},
+	"auth": {
+		"title": "Autentifikácia",
+		"description": "Prihláste sa do svojho účtu alebo vytvorte nový",
+		"signIn": "Prihlásiť sa",
+		"signUp": "Registrovať sa",
+		"emailPlaceholder": "Zadajte svoj e-mail",
+		"passwordPlaceholder": "Zadajte svoje heslo",
+		"confirmPasswordPlaceholder": "Vytvorte heslo",
+		"namePlaceholder": "Zadajte svoje meno",
+		"signingIn": "Prihlasovanie...",
+		"creatingAccount": "Vytváranie účtu...",
+		"signInFailed": "Prihlásenie zlyhalo",
+		"signUpFailed": "Registrácia zlyhala"
+	},
+	"dashboard": {
+		"title": "Nástenka",
+		"welcome": "Vitajte na svojej personalizovanej nástenke, {name}!",
+		"loadingDescription": "Počkajte prosím, kým skontrolujeme vašu autentifikáciu",
+		"accessDenied": "Prístup odmietnutý",
+		"needToBeLoggedIn": "Musíte byť prihlásený, aby ste mohli zobraziť túto stránku",
+		"userInformation": "Informácie o používateľovi",
+		"quickActions": "Rýchle akcie",
+		"accountStatus": "Stav účtu",
+		"accountActive": "✅ Váš účet je aktívny a autentifikovaný",
+		"userId": "ID používateľa",
+		"profileImage": "Profilový obrázok"
+	}
+}
