@@ -9,7 +9,7 @@ if (!databaseUrl) {
 export default {
 	schema: "./db/schema/**/*.ts",
 	out: "./db/drizzle",
-	dialect: "sqlite",
+	dialect: "turso",
 	dbCredentials: {
 		url: databaseUrl,
 	},

@@ -1,5 +1,5 @@
-import Database from "better-sqlite3"
-import { drizzle } from "drizzle-orm/better-sqlite3"
+import { createClient } from "@libsql/client"
+import { drizzle } from "drizzle-orm/libsql"
 import * as schema from "./schema"
 
 const databaseUrl = process.env.DATABASE_URL
@@ -13,8 +13,8 @@ let _db: ReturnType<typeof drizzle> | null = null
 export const getDb = () => {
 	if (!_db) {
 		console.log("Connecting to database at:", databaseUrl)
-		const sqlite = new Database(databaseUrl)
-		_db = drizzle({ client: sqlite, schema })
+		const client = createClient({ url: databaseUrl })
+		_db = drizzle({ client, schema })
 	}
 	return _db
 }
