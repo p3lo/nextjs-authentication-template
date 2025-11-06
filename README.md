@@ -6,6 +6,8 @@ A modern Next.js 16.0.1 application template featuring authentication with Bette
 
 - **Authentication System**: Complete auth flow with register/login forms
 - **Better Auth Integration**: Server-side authentication with session management
+- **Internationalization (i18n)**: Multi-language support with English and Slovak
+- **Theme System**: Dark/light/system theme support with persistent preferences
 - **Drizzle ORM**: Type-safe database operations with SQLite
 - **Modern UI**: Built with shadcn/ui components and Tailwind CSS
 - **TypeScript**: Full type safety throughout the application
@@ -20,6 +22,8 @@ A modern Next.js 16.0.1 application template featuring authentication with Bette
 - **UI Components**: shadcn/ui
 - **Database**: SQLite with Drizzle ORM
 - **Authentication**: Better Auth
+- **Internationalization**: next-intl
+- **Theme Management**: next-themes
 - **Package Manager**: pnpm
 
 ## 📋 Prerequisites
@@ -65,14 +69,27 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```
 atrium/
 ├── app/                    # Next.js app directory
+│   ├── [locale]/          # Localized routes (en, sk)
+│   │   ├── auth/          # Authentication pages
+│   │   ├── dashboard/     # Protected dashboard page
+│   │   ├── layout.tsx     # Locale layout
+│   │   └── page.tsx       # Localized home page
+│   ├── i18n/              # Internationalization config
+│   │   ├── navigation.ts  # next-intl navigation
+│   │   ├── request.ts     # next-intl request config
+│   │   └── routing.ts     # Locale routing config
+│   ├── messages/          # Translation files
+│   │   ├── en.json        # English translations
+│   │   └── sk.json        # Slovak translations
 │   ├── api/auth/          # Better Auth API routes
-│   ├── auth/              # Authentication pages
-│   ├── dashboard/         # Protected dashboard page
 │   ├── actions.ts         # Server actions
-│   ├── layout.tsx         # Root layout
+│   ├── layout.tsx         # Root layout with theme & language switchers
 │   └── page.tsx           # Home page
 ├── components/            # React components
+│   ├── language-selector.tsx  # Language switcher component
+│   ├── theme-provider.tsx     # Theme system components
 │   └── ui/               # shadcn/ui components
+├── proxy.ts              # Next.js 16 proxy (middleware)
 ├── db/                   # Database configuration
 │   ├── drizzle/          # Migration files
 │   ├── schema/           # Database schemas
@@ -83,6 +100,91 @@ atrium/
 │   └── utils.ts          # Utility functions
 └── public/               # Static assets
 ```
+
+## 🎨 Theme System
+
+The application includes a comprehensive theme system with dark/light/system theme support:
+
+### Theme Components
+
+- **ThemeProvider**: Wraps the application with theme context
+- **ModeToggle**: Dropdown button for theme switching in the header
+- **Persistent Storage**: Theme preference is saved in localStorage
+
+### Usage
+
+The theme switcher is automatically available in the top-right corner of all pages. Users can choose between:
+
+- **Light**: Always use light theme
+- **Dark**: Always use dark theme
+- **System**: Follow system preference (default)
+
+### Implementation
+
+```tsx
+// Theme provider setup in layout.tsx
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+  {children}
+</ThemeProvider>
+
+// Using theme in components
+import { useTheme } from "next-themes"
+const { setTheme } = useTheme()
+```
+
+## 🌍 Internationalization (i18n)
+
+The application supports multiple languages with next-intl:
+
+### Supported Languages
+
+- **English (en)**: Default language
+- **Slovak (sk)**: Secondary language
+
+### Language Components
+
+- **LanguageSelector**: Dropdown button for language switching in the header
+- **Routing**: Automatic locale-based routing (`/en/*`, `/sk/*`)
+- **Translations**: Organized by page in JSON files
+
+### Translation Files
+
+```
+app/messages/
+├── en.json    # English translations
+└── sk.json    # Slovak translations
+```
+
+### Usage
+
+The language switcher is available in the top-right corner next to the theme toggle. When users switch languages:
+
+- Current page content is translated
+- URL is updated with locale prefix (except for default English)
+- Language preference is maintained during navigation
+
+### Adding Translations
+
+To add new translations:
+
+1. Update both `en.json` and `sk.json` files
+2. Use translation keys in components:
+
+```tsx
+// Server components
+const t = await getTranslations("home")
+<h1>{t("title")}</h1>
+
+// Client components  
+const t = useTranslations("auth")
+<button>{t("signIn")}</button>
+```
+
+### Adding New Languages
+
+1. Add locale to `app/i18n/routing.ts`
+2. Create new translation file in `app/messages/`
+3. Update middleware matcher if needed
 
 ## 🔐 Authentication
 
@@ -192,6 +294,8 @@ Ensure your platform supports:
 
 - [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features
 - [Better Auth Documentation](https://better-auth.com/docs) - Authentication setup
+- [next-intl Documentation](https://next-intl-docs.vercel.app/) - Internationalization
+- [next-themes Documentation](https://github.com/pacocoursey/next-themes) - Theme management
 - [Drizzle ORM Documentation](https://orm.drizzle.team/docs/overview) - Database operations
 - [shadcn/ui Documentation](https://ui.shadcn.com/docs) - UI components
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Styling
@@ -212,6 +316,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Next.js](https://nextjs.org/)
 - [Better Auth](https://better-auth.com/)
+- [next-intl](https://next-intl-docs.vercel.app/)
+- [next-themes](https://github.com/pacocoursey/next-themes)
 - [Drizzle ORM](https://orm.drizzle.team/)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
