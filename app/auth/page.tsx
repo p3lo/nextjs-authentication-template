@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -7,8 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { signIn, signUp } from "../actions"
-import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
 
 interface SignInForm {
 	email: string
@@ -33,11 +33,13 @@ export default function AuthPage() {
 		setLoading(true)
 		setError(null)
 		try {
-			const formData = new FormData()
-			formData.append("email", signInForm.email)
-			formData.append("password", signInForm.password)
-			const result = await signIn(formData)
-			if (result?.success) {
+			const { data: _, error } = await authClient.signIn.email({
+				email: signInForm.email,
+				password: signInForm.password,
+			})
+			if (error) {
+				setError(error.message || "Sign in failed")
+			} else {
 				router.push("/dashboard")
 			}
 		} catch (err) {
@@ -52,12 +54,14 @@ export default function AuthPage() {
 		setLoading(true)
 		setError(null)
 		try {
-			const formData = new FormData()
-			formData.append("name", signUpForm.name)
-			formData.append("email", signUpForm.email)
-			formData.append("password", signUpForm.password)
-			const result = await signUp(formData)
-			if (result?.success) {
+			const { data: _, error } = await authClient.signUp.email({
+				name: signUpForm.name,
+				email: signUpForm.email,
+				password: signUpForm.password,
+			})
+			if (error) {
+				setError(error.message || "Sign up failed")
+			} else {
 				router.push("/auth")
 			}
 		} catch (err) {

@@ -1,13 +1,39 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { getSession, signOut } from "../actions"
+import { authClient } from "@/lib/auth-client"
 
-export default async function Dashboard() {
-	const session = await getSession()
+export default function Dashboard() {
+	const { data: session, isPending, error } = authClient.useSession()
+	const router = useRouter()
 
-	if (!session) {
+	const handleSignOut = async () => {
+		try {
+			await authClient.signOut()
+			router.push("/auth")
+		} catch (err) {
+			console.error("Sign out error:", err)
+		}
+	}
+
+	if (isPending) {
+		return (
+			<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+				<Card className="w-full max-w-md">
+					<CardHeader>
+						<CardTitle>Loading...</CardTitle>
+						<CardDescription>Please wait while we check your authentication</CardDescription>
+					</CardHeader>
+				</Card>
+			</div>
+		)
+	}
+
+	if (error || !session) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
 				<Card className="w-full max-w-md">
@@ -73,11 +99,9 @@ export default async function Dashboard() {
 									Back to Home
 								</Button>
 							</Link>
-							<form action={signOut}>
-								<Button variant="destructive" type="submit" className="w-full">
-									Logout
-								</Button>
-							</form>
+							<Button variant="destructive" onClick={handleSignOut} className="w-full">
+								Logout
+							</Button>
 						</div>
 					</div>
 
